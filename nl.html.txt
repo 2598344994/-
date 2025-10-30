@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>温馨祝福</title>
+    <style>
+        .popup {
+            position: fixed;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            text-align: center;
+        }
+        .popup p {
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            font-family: "微软雅黑", sans-serif;
+        }
+        .popup button {
+            padding: 8px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-family: "微软雅黑", sans-serif;
+        }
+        .popup button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // 祝福语句列表
+        const tips = [
+            "请注意休息！",
+            "多喝水哦~",
+            "我在贵州好想你们！",
+            "保护眼睛很重要！",
+            "每天都要努力哦！",
+            "保持好心情！",
+            "要记得吃饭！",
+            "对自己好一点！"
+        ];
+
+        // 背景颜色列表
+        const bgColors = [
+            'lightpink', 'skyblue', 'lightgreen', 'lavender',
+            'lightyellow', 'plum', 'coral', 'bisque', 'aquamarine',
+            'mistyrose', 'honeydew', 'lavenderblush', 'oldlace'
+        ];
+
+        // 创建弹窗函数
+        function showWarmTip(tip) {
+            const popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.style.backgroundColor = bgColors[Math.floor(Math.random() * bgColors.length)];
+            
+            // 随机位置（适配手机屏幕）
+            const maxX = window.innerWidth - 250;
+            const maxY = window.innerHeight - 150;
+            const x = Math.floor(Math.random() * maxX);
+            const y = Math.floor(Math.random() * maxY);
+            popup.style.left = `${x}px`;
+            popup.style.top = `${y}px`;
+
+            // 弹窗内容
+            popup.innerHTML = `
+                <p>${tip}</p>
+                <button onclick="this.parentElement.remove()">好的</button>
+            `;
+
+            document.body.appendChild(popup);
+        }
+
+        // 定时弹出弹窗
+        function schedulePopups(interval = 500, count = 100) {
+            if (count > 0) {
+                const tip = tips[Math.floor(Math.random() * tips.length)];
+                showWarmTip(tip);
+                setTimeout(() => {
+                    schedulePopups(interval, count - 1);
+                }, interval);
+            }
+        }
+
+        // 开始弹出祝福
+        schedulePopups(500, 100); // 每隔500毫秒弹出一个，共100个
+    </script>
+</body>
+</html>
